@@ -12,8 +12,8 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: zmijka, 
-#       CREATED: 09.12.2023 23:09:47
-#      REVISION: 0.1
+#       CREATED: 17.03.2025
+#      REVISION: 0.2
 #===============================================================================
 
 function usage(){
@@ -45,26 +45,13 @@ while [ ! -z "$1" ];do
 	    		exit 1
 			fi
 
-			# DEFAULT_ARG="$0"
-			# echo $DEFAULT_ARG
-			# shift
-			# size_t="$#"
-			# echo $size_t
-
 			for arg in "$@"
 			do
 				VBoxManage startvm $arg --type=headless
 				echo $arg
 			done
 
-
-# for k in `seq 0 $[roztab2-1]`
-# do
-#         echo -n ${tab2[$k]}
-# done
-
 			shift
-
 			;;
 
         -l)
