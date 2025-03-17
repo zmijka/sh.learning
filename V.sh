@@ -3,7 +3,7 @@
 #
 #          FILE: V.sh
 #
-#         USAGE: see ./V.sh -v
+#         USAGE: ./V.sh
 #
 #   DESCRIPTION: 
 #
@@ -17,13 +17,13 @@
 #===============================================================================
 
 function usage(){
-	printf "Usage: $0 [Options [parameters]]\n"
+	printf "Usage: $0 Options arg1 [arg2 ...]\n"
     printf "\n"
     printf "Options:\n"
     printf " -r [name VM]		run VM\n"
-    printf " -l     			list avalable VMs\n"
-    printf " -lr     			list running VMs\n"
-	printf " -h     			this help\n"
+    printf " -l     		list avalable VMs\n"
+    printf " -lr     		list running VMs\n"
+	printf " -h     		this help\n"
 
 return 0
 }
@@ -39,8 +39,32 @@ while [ ! -z "$1" ];do
 
         -r)
         	shift
-			VBoxManage startvm $1 --type=headless
-			echo "Uruchamiam $1"	
+
+			if [ "$#" -lt 1 ]; then
+  				usage
+	    		exit 1
+			fi
+
+			# DEFAULT_ARG="$0"
+			# echo $DEFAULT_ARG
+			# shift
+			# size_t="$#"
+			# echo $size_t
+
+			for arg in "$@"
+			do
+				VBoxManage startvm $arg --type=headless
+				echo $arg
+			done
+
+
+# for k in `seq 0 $[roztab2-1]`
+# do
+#         echo -n ${tab2[$k]}
+# done
+
+			shift
+
 			;;
 
         -l)
@@ -54,12 +78,8 @@ while [ ! -z "$1" ];do
 			echo "List running VMs:"
 			VBoxManage list vms runningvms | cut -d '"' -f 2
 			;;
-        
-		-lab)
-			shift
-			echo "Uruchamiam LAB"
-			;;
-		*)
+
+        *)
 			echo "Incorrect input provided"
 			usage
 
